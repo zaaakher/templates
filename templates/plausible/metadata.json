@@ -1,0 +1,24 @@
+{
+  "id": "plausible",
+  "name": "Plausible Analytics",
+  "version": "latest",
+  "description": "Plausible es una alternativa ligera y de código abierto a Google Analytics. Simple, respetuosa con la privacidad y cumple con el GDPR/CCPA. No utiliza cookies y no recopila datos personales.",
+  "logo": "plausible.svg",
+  "links": {
+    "github": "https://github.com/plausible/analytics",
+    "website": "https://plausible.io",
+    "docs": "https://plausible.io/docs"
+  },
+  "tags": [
+    "analytics",
+    "privacy",
+    "statistics",
+    "web-analytics",
+    "gdpr-compliant"
+  ],
+  "requirements": {
+    "memory": "512MB",
+    "cpu": "1x",
+    "disk": "1GB"
+  }
+}

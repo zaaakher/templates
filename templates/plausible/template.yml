@@ -2,6 +2,12 @@ metadata:
   id: plausible
   name: Plausible Analytics
   description: Privacy-focused Google Analytics alternative
+  version: v2.1.5
+  logo: plausible.svg
+  links:
+    github: https://github.com/plausible/plausible
+    website: https://plausible.io/
+    docs: https://plausible.io/docs
   tags:
     - analytics
     - privacy

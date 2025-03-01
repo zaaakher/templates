@@ -6,8 +6,8 @@ WORKDIR /app
 RUN npm install -g serve
 
 # Copiar la carpeta templates
-COPY ../templates ./public/templates
-COPY ../templates/index.html ./public/
+COPY ./templates ./public/templates
+COPY ./templates/index.html ./public/
 
 # Exponer el puerto
 EXPOSE 3000

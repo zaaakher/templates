@@ -7,10 +7,9 @@ RUN npm install -g serve
 
 # Copiar la carpeta templates
 COPY ./templates ./public/templates
-COPY ./templates/index.html ./public/
 
 # Exponer el puerto
 EXPOSE 3000
 
-# Servir los archivos estáticos
-CMD ["serve", "-s", "public", "-l", "3000"]
+# Servir los archivos estáticos con listado de directorios
+CMD ["serve", "--no-clipboard", "--cors", "-l", "3000", "public/templates"] 

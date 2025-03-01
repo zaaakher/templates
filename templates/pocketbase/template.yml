@@ -1,0 +1,21 @@
+metadata:
+  id: pocketbase
+  name: PocketBase
+  description: Open Source backend in 1 file
+  tags:
+    - backend
+    - database
+    - api
+
+variables:
+  main_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: pocketbase
+      port: 80
+      host: ${main_domain}
+
+  env: {}  # No hay variables de entorno por defecto
+
+  mounts: []  # No hay archivos para montar por defecto

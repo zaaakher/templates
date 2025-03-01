@@ -3,6 +3,10 @@ import { Hono } from 'hono'
 import { serveStatic } from '@hono/node-server/serve-static'
 import fs from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = new Hono()
 
@@ -56,6 +60,7 @@ async function generateIndex() {
         .template-links {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
         .template-links a {
             text-decoration: none;

@@ -22,7 +22,7 @@ jobs:
           echo "### 📝 Blueprints Base64 Table" > comment.md
           echo '' >> comment.md
 
-          echo "You can use the base64 value to import the blueprint into the UI."
+          echo "You can use the base64 value to import the blueprint into the UI." >> comment.md
           echo "<details>" >> comment.md
           echo "<summary>🔍 Show all blueprints base64</summary>" >> comment.md
           echo '' >> comment.md

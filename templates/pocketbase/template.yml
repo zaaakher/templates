@@ -1,18 +1,3 @@
-metadata:
-  id: pocketbase
-  name: PocketBase
-  description: Open Source backend in 1 file
-  version: v0.22.4
-  logo: pocketbase.svg
-  links:
-    github: https://github.com/pocketbase/pocketbase
-    website: https://pocketbase.io/
-    docs: https://pocketbase.io/docs/
-  tags:
-    - backend
-    - database
-    - api
-
 variables:
   main_domain: ${randomDomain}
 

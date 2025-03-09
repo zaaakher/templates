@@ -7,6 +7,6 @@ config:
       port: 80
       host: ${main_domain}
 
-  env: {}  # No hay variables de entorno por defecto
+  env: {} 
 
-  mounts: []  # No hay archivos para montar por defecto
+  mounts: [] 

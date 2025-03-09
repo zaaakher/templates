@@ -1,0 +1,62 @@
+name: Generate Base64 Blueprints Table
+
+on:
+  pull_request:
+    paths:
+      - 'blueprints/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'blueprints/**'
+
+jobs:
+  encode-and-comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate base64 table
+        id: generate
+        run: |
+          echo "### 📝 Blueprints Base64 Table" > comment.md
+          echo '' >> comment.md
+          echo '| Template | Base64 |' >> comment.md
+          echo '|----------|--------|' >> comment.md
+
+          for dir in blueprints/*; do
+            if [ -d "$dir" ]; then
+              TEMPLATE_NAME=$(basename "$dir")
+              
+              COMPOSE_FILE="$dir/docker-compose.yml"
+              TEMPLATE_FILE="$dir/template.yml"
+              
+              if [ -f "$COMPOSE_FILE" ] && [ -f "$TEMPLATE_FILE" ]; then
+                CONTENT=$(cat "$COMPOSE_FILE" "$TEMPLATE_FILE" | base64 -w 0)
+                SHORT_CONTENT="${CONTENT:0:50}..." # Primera parte para la tabla
+                echo "| $TEMPLATE_NAME | \`$SHORT_CONTENT\` |" >> comment.md
+
+                # Detalle completo
+                echo '' >> comment.md
+                echo "#### $TEMPLATE_NAME Full Base64" >> comment.md
+                echo '' >> comment.md
+                echo '```' >> comment.md
+                echo "$CONTENT" >> comment.md
+                echo '```' >> comment.md
+              fi
+            fi
+          done
+
+      - name: Post comment to PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          path: comment.md
+
+      - name: Post comment to commit (fallback)
+        uses: peter-evans/commit-comment@v3
+        if: github.event_name != 'pull_request'
+        with:
+          body-path: comment.md

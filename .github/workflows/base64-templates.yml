@@ -16,13 +16,15 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Generate base64 table
+      - name: Generate base64 for blueprints
         id: generate
         run: |
           echo "### 📝 Blueprints Base64 Table" > comment.md
           echo '' >> comment.md
-          echo '| Template | Base64 (short) |' >> comment.md
-          echo '|----------|----------------|' >> comment.md
+
+          echo "<details>" >> comment.md
+          echo "<summary>🔍 Show all blueprints base64</summary>" >> comment.md
+          echo '' >> comment.md
 
           for dir in blueprints/*; do
             if [ -d "$dir" ]; then
@@ -36,26 +38,19 @@ jobs:
                 TEMPLATE_CONTENT=$(cat "$TEMPLATE_FILE")
 
                 JSON="{\"compose\":\"$COMPOSE_CONTENT\",\"config\":\"$TEMPLATE_CONTENT\"}"
-
                 BASE64_JSON=$(echo -n "$JSON" | base64 -w 0)
-                SHORT_CONTENT="${BASE64_JSON:0:50}..."
 
-                # Add table row with short base64 preview
-                echo "| $TEMPLATE_NAME | \`$SHORT_CONTENT\` |" >> comment.md
-
-                # Add collapsible full base64 section
-                echo '' >> comment.md
-                echo "<details>" >> comment.md
-                echo "<summary>🔍 $TEMPLATE_NAME Full Base64</summary>" >> comment.md
+                echo "#### $TEMPLATE_NAME" >> comment.md
                 echo '' >> comment.md
                 echo '```' >> comment.md
                 echo "$BASE64_JSON" >> comment.md
                 echo '```' >> comment.md
-                echo '</details>' >> comment.md
                 echo ''
               fi
             fi
           done
+
+          echo '</details>' >> comment.md
 
       - name: Post comment to PR
         uses: marocchino/sticky-pull-request-comment@v2

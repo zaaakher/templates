@@ -35,8 +35,8 @@ jobs:
               TEMPLATE_FILE="$dir/template.yml"
 
               if [ -f "$COMPOSE_FILE" ] && [ -f "$TEMPLATE_FILE" ]; then
-                COMPOSE_CONTENT=$(cat "$COMPOSE_FILE")
-                TEMPLATE_CONTENT=$(cat "$TEMPLATE_FILE")
+                COMPOSE_CONTENT=$(jq -Rs . < "$COMPOSE_FILE")
+                TEMPLATE_CONTENT=$(jq -Rs . < "$TEMPLATE_FILE")
 
                 JSON="{\"compose\":\"$COMPOSE_CONTENT\",\"config\":\"$TEMPLATE_CONTENT\"}"
                 BASE64_JSON=$(echo -n "$JSON" | base64 -w 0)

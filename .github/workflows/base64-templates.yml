@@ -2,13 +2,11 @@ name: Generate Base64 Blueprints Table
 
 on:
   pull_request:
-    paths:
-      - 'blueprints/**'
+    branches:
+      - main
   push:
     branches:
       - main
-    paths:
-      - 'blueprints/**'
 
 jobs:
   encode-and-comment:
@@ -23,28 +21,33 @@ jobs:
         run: |
           echo "### 📝 Blueprints Base64 Table" > comment.md
           echo '' >> comment.md
-          echo '| Template | Base64 |' >> comment.md
-          echo '|----------|--------|' >> comment.md
+          echo '| Template | Base64 (short) |' >> comment.md
+          echo '|----------|----------------|' >> comment.md
 
           for dir in blueprints/*; do
             if [ -d "$dir" ]; then
               TEMPLATE_NAME=$(basename "$dir")
-              
+
               COMPOSE_FILE="$dir/docker-compose.yml"
               TEMPLATE_FILE="$dir/template.yml"
-              
+
               if [ -f "$COMPOSE_FILE" ] && [ -f "$TEMPLATE_FILE" ]; then
                 CONTENT=$(cat "$COMPOSE_FILE" "$TEMPLATE_FILE" | base64 -w 0)
-                SHORT_CONTENT="${CONTENT:0:50}..." # Primera parte para la tabla
+                SHORT_CONTENT="${CONTENT:0:50}..."
+
+                # Add table row with short base64 preview
                 echo "| $TEMPLATE_NAME | \`$SHORT_CONTENT\` |" >> comment.md
 
-                # Detalle completo
+                # Add collapsible full base64 section
                 echo '' >> comment.md
-                echo "#### $TEMPLATE_NAME Full Base64" >> comment.md
+                echo "<details>" >> comment.md
+                echo "<summary>🔍 $TEMPLATE_NAME Full Base64</summary>" >> comment.md
                 echo '' >> comment.md
                 echo '```' >> comment.md
                 echo "$CONTENT" >> comment.md
                 echo '```' >> comment.md
+                echo '</details>' >> comment.md
+                echo ''
               fi
             fi
           done

@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate blueprint folders
+      - name: Validate blueprint folders and files
         run: |
           echo "🔍 Validating blueprints folder structure..."
 
@@ -49,35 +49,39 @@ jobs:
             echo "✅ Blueprint folders validated successfully."
           fi
 
-      - name: Validate meta.json matches blueprint folders
+      - name: Validate meta.json matches blueprint folders and logo files
         run: |
-          echo "🔍 Validating meta.json against blueprint folders..."
+          echo "🔍 Validating meta.json against blueprint folders and logos..."
 
           ERROR=0
 
           # Read all blueprint folder names into an array
           FOLDERS=($(ls -1 blueprints))
 
-          # Extract ids from meta.json
-          META_IDS=$(jq -r '.[].id' meta.json)
+          # Extract ids and logos from meta.json
+          IDS_AND_LOGOS=$(jq -c '.[] | {id, logo}' meta.json)
 
           # Validate each id in meta.json exists as a folder
-          for ID in $META_IDS; do
-            FOUND=0
-            for FOLDER in "${FOLDERS[@]}"; do
-              if [ "$ID" == "$FOLDER" ]; then
-                FOUND=1
-                break
-              fi
-            done
+          for item in $IDS_AND_LOGOS; do
+            ID=$(echo "$item" | jq -r '.id')
+            LOGO=$(echo "$item" | jq -r '.logo')
 
-            if [ "$FOUND" -eq 0 ]; then
-              echo "❌ meta.json id \"$ID\" does not match any folder in blueprints/"
+            # Check if folder exists
+            if [ ! -d "blueprints/$ID" ]; then
+              echo "❌ meta.json id \"$ID\" does not have a matching folder in blueprints/"
+              ERROR=1
+              continue
+            fi
+
+            # Check if logo file exists inside its folder
+            if [ ! -f "blueprints/$ID/$LOGO" ]; then
+              echo "❌ Logo \"$LOGO\" defined for \"$ID\" does not exist in blueprints/$ID/"
               ERROR=1
             fi
           done
 
-          # Validate each folder has an entry in meta.json
+          # Validate each folder has a matching id in meta.json
+          META_IDS=$(jq -r '.[].id' meta.json)
           for FOLDER in "${FOLDERS[@]}"; do
             FOUND=0
             for ID in $META_IDS; do

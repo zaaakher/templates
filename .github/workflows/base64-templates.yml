@@ -38,7 +38,7 @@ jobs:
                 COMPOSE_CONTENT=$(jq -Rs . < "$COMPOSE_FILE")
                 TEMPLATE_CONTENT=$(jq -Rs . < "$TEMPLATE_FILE")
 
-                JSON="{\"compose\":\"$COMPOSE_CONTENT\",\"config\":\"$TEMPLATE_CONTENT\"}"
+                JSON="{\"compose\":$COMPOSE_CONTENT,\"config\":$TEMPLATE_CONTENT}"
                 BASE64_JSON=$(echo -n "$JSON" | base64 -w 0)
 
                 echo "#### $TEMPLATE_NAME" >> comment.md

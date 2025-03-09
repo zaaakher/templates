@@ -32,8 +32,13 @@ jobs:
               TEMPLATE_FILE="$dir/template.yml"
 
               if [ -f "$COMPOSE_FILE" ] && [ -f "$TEMPLATE_FILE" ]; then
-                CONTENT=$(cat "$COMPOSE_FILE" "$TEMPLATE_FILE" | base64 -w 0)
-                SHORT_CONTENT="${CONTENT:0:50}..."
+                COMPOSE_CONTENT=$(cat "$COMPOSE_FILE")
+                TEMPLATE_CONTENT=$(cat "$TEMPLATE_FILE")
+
+                JSON="{\"compose\":\"$COMPOSE_CONTENT\",\"config\":\"$TEMPLATE_CONTENT\"}"
+
+                BASE64_JSON=$(echo -n "$JSON" | base64 -w 0)
+                SHORT_CONTENT="${BASE64_JSON:0:50}..."
 
                 # Add table row with short base64 preview
                 echo "| $TEMPLATE_NAME | \`$SHORT_CONTENT\` |" >> comment.md
@@ -44,7 +49,7 @@ jobs:
                 echo "<summary>🔍 $TEMPLATE_NAME Full Base64</summary>" >> comment.md
                 echo '' >> comment.md
                 echo '```' >> comment.md
-                echo "$CONTENT" >> comment.md
+                echo "$BASE64_JSON" >> comment.md
                 echo '```' >> comment.md
                 echo '</details>' >> comment.md
                 echo ''

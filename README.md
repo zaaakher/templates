@@ -76,20 +76,21 @@ Dokploy use a defined structure for the `template.yml` file, we have 4 sections 
 3. `env`: This is where we define the environment variables for the template.
 4. `mounts`: This is where we define the mounts for the template.
 
-1. the `variables(Optional)` structure is the following:
+
+- The `variables(Optional)` structure is the following:
 
 ```yaml
-1. variables:
+variables:
   main_domain: ${domain}
-
-2. variables:
-  my-domain: https://my-domain.com
+  my_domain: https://my-domain.com
+  my_password: ${password:32}
+  any_helper: ${you-can-use-any-helper}
 ```
 
-2. the `config` structure is the following:
+- The `config` structure is the following:
 
 ```yaml
-1. config:
+config:
   domains: # Optional
     - serviceName: grafana # Required
       port: 3000 # Required

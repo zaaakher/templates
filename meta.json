@@ -51,11 +51,28 @@
       ]
     },
     {
+      "id": "pocketbase",
+      "name": "PocketBase",
+      "description": "Open Source backend in 1 file",
+      "version": "v0.22.4",
+      "logo": "logo.svg",
+      "links": {
+          "github": "https://github.com/pocketbase/pocketbase",
+          "website": "https://pocketbase.io/",
+          "docs": "https://pocketbase.io/docs/"
+      },
+      "tags": [
+          "backend",
+          "database",
+          "api"
+      ]
+  },
+    {
       "id": "plausible",
       "name": "Plausible",
       "version": "v2.1.5",
       "description": "Plausible is a open source, self-hosted web analytics platform that lets you track website traffic and user behavior.",
-      "logo": "plausible.svg",
+      "logo": "logo.svg",
       "links": {
         "github": "https://github.com/plausible/plausible",
         "website": "https://plausible.io/",

@@ -1,0 +1,13 @@
+variables:
+  main_domain: ${domain}
+
+config:
+  domains:
+    - serviceName: ghost
+      port: 2368
+      host: ${main_domain}
+
+  env:
+    - GHOST_HOST=${main_domain}
+
+  mounts: [] 

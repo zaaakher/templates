@@ -1,0 +1,12 @@
+variables:
+  main_domain: ${domain}
+
+config:
+  domains:
+    - serviceName: grafana
+      port: 3000
+      host: ${main_domain}
+
+  env: []
+
+  mounts: [] 

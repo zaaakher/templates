@@ -1,23 +1,25 @@
+name: Generate Base64 for Changed Blueprints
+
 on:
   pull_request:
     branches:
       - main
 
 jobs:
-  encode-and-comment:
+  encode-changed:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Get changed blueprint folders
+      - name: Get changed blueprints folders
         id: changes
         run: |
-          echo "folders=$(git diff --name-only ${{ github.event.pull_request.base.sha }} | grep '^blueprints/' | cut -d/ -f2 | sort -u | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+          CHANGED=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }} | grep '^blueprints/' | cut -d/ -f2 | sort -u)
+          echo "folders=$(echo $CHANGED | jq -R -s -c 'split(" ") | map(select(length > 0))')" >> $GITHUB_OUTPUT
 
-      - name: Generate base64 for changed blueprints only
-        id: generate
+      - name: Generate base64 for changed blueprints
         run: |
           CHANGED_FOLDERS=$(echo '${{ steps.changes.outputs.folders }}' | jq -r '.[]')
 
@@ -32,7 +34,8 @@ jobs:
             echo '' >> comment.md
 
             for dir in $CHANGED_FOLDERS; do
-              TEMPLATE_NAME="$dir"
+              echo "Processing $dir..."
+
               COMPOSE_FILE="blueprints/$dir/docker-compose.yml"
               TEMPLATE_FILE="blueprints/$dir/template.yml"
 
@@ -43,12 +46,14 @@ jobs:
                 JSON="{\"compose\":$COMPOSE_CONTENT,\"config\":$TEMPLATE_CONTENT}"
                 BASE64_JSON=$(echo -n "$JSON" | base64 -w 0)
 
-                echo "#### $TEMPLATE_NAME" >> comment.md
+                echo "#### $dir" >> comment.md
                 echo '' >> comment.md
                 echo '```' >> comment.md
                 echo "$BASE64_JSON" >> comment.md
                 echo '```' >> comment.md
                 echo ''
+              else
+                echo "❌ Missing files in $dir" >> comment.md
               fi
             done
 
@@ -57,6 +62,5 @@ jobs:
 
       - name: Post comment to PR
         uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
         with:
           path: comment.md

@@ -11,6 +11,7 @@ import {
 import { Button } from './ui/button';
 import { toast } from 'sonner';
 import copy from 'copy-to-clipboard';
+import { ModeToggle } from '../mode-toggle';
 interface Template {
   id: string;
   name: string;
@@ -121,8 +122,9 @@ const TemplateGrid: React.FC = () => {
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold text-center text-gray-900 mb-8">
+        <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold text-center  mb-8">
           Available Templates ({templates.length})
+          <ModeToggle />
         </h1>
         <div className="max-w-xl mx-auto mb-12">
           <div className="relative">
@@ -167,7 +169,7 @@ const TemplateGrid: React.FC = () => {
                     {template.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600 line-clamp-2">{template.description}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{template.description}</p>
                   <div className="mt-2 flex flex-wrap gap-1">
                     {template.tags.slice(0, 3).map((tag) => (
                       <span
@@ -275,7 +277,7 @@ const TemplateGrid: React.FC = () => {
                     Docker Compose
                     <span className="text-xs font-normal text-gray-500">docker-compose.yml</span>
                   </h3>
-                  <pre className="bg-gray-100 p-6 rounded-lg overflow-x-auto text-sm">
+                  <pre className="bg-card border border-border p-6 rounded-lg overflow-x-auto text-sm">
                     <code className="font-mono">{templateFiles.dockerCompose}</code>
                   </pre>
                 </div>
@@ -286,7 +288,7 @@ const TemplateGrid: React.FC = () => {
                     Configuration
                     <span className="text-xs font-normal text-gray-500">template.yml</span>
                   </h3>
-                  <pre className="bg-gray-100 p-6 rounded-lg overflow-x-auto text-sm">
+                  <pre className="bg-card border border-border p-6 rounded-lg overflow-x-auto text-sm">
                     <code className="font-mono">{templateFiles.config}</code>
                   </pre>
                 </div>
@@ -300,7 +302,7 @@ const TemplateGrid: React.FC = () => {
                   <div className="relative">
                     <textarea
                       readOnly
-                      className="w-full h-32 p-4 bg-gray-100 rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full h-32 p-4 bg-card border border-border rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                       value={getBase64Config()}
                     />
                     <Button
@@ -308,7 +310,7 @@ const TemplateGrid: React.FC = () => {
                         toast.success('Copied to clipboard')
                         copy(getBase64Config())
                       }}
-                      className="absolute top-2 right-2 px-3 py-1 text-white text-sm cursor-pointer"
+                      className="absolute top-2 right-2 px-3 py-1  text-sm cursor-pointer"
                     >
                       Copy
                     </Button>

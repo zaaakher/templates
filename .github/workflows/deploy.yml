@@ -1,29 +1,30 @@
-name: PR Preview Static Files
+name: Deploy PR previews
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+concurrency: preview-${{ github.ref }}
 
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Deploy preview to gh-pages (pr-<NUM>)
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./ # 👈 O solo blueprints/ si prefieres
-          destination_dir: pr-${{ github.event.pull_request.number }}
+      # Si no tienes build, solo copia los archivos
+      - name: Prepare static preview folder
+        run: |
+          mkdir -p preview
+          cp meta.json preview/
+          cp -r blueprints preview/
 
-      - name: Comment PR with Preview URL
-        uses: marocchino/sticky-pull-request-comment@v2
+      # Despliega el preview usando el action
+      - uses: rossjrw/pr-preview-action@v1
         with:
-          message: |
-            🚀 PR Preview deployed!
-            👉 [View it here](https://dokploy.github.io/templates/pr-${{ github.event.pull_request.number }}/)
+          source-dir: preview

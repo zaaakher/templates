@@ -23,8 +23,7 @@ jobs:
         mkdir -p preview
         cp meta.json preview/
         cp -r blueprints preview/
-        echo "<h1>Preview for PR #${{ github.event.pull_request.number }}</h1>" > preview/index.html
-
+        cp index.html preview/
 
       # Despliega el preview usando el action
       - uses: rossjrw/pr-preview-action@v1

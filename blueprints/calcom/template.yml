@@ -1,7 +1,7 @@
 variables:
   main_domain: ${randomDomain}
-  calcom_encryption_key: ${generateBase64(32)}
-  nextauth_secret: ${generateBase64(32)}
+  calcom_encryption_key: ${base64:32}
+  nextauth_secret: ${base64:32}
 
 config:
   domains:

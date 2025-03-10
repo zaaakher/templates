@@ -1,8 +1,8 @@
 variables:
   main_domain: ${randomDomain}
-  mysql_password: ${generatePassword()}
-  mysql_root_password: ${generatePassword()}
-  admin_password: ${generatePassword()}
+  mysql_password: ${password}
+  mysql_root_password: ${password}
+  admin_password: ${password}
 
 config:
   domains:

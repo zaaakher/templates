@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  service_hash: ${generateHash(projectName)}
+  service_hash: ${hash:32}
 
 config:
   domains:

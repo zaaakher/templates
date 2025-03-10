@@ -1,10 +1,10 @@
 variables:
   main_domain: ${randomDomain}
-  mysql_password: ${generatePassword}
-  mysql_root_password: ${generatePassword}
+  mysql_password: ${password}
+  mysql_root_password: ${password}
   mysql_user: tickets
   mysql_database: tickets
-  encryption_key: ${generatePassword(48)}
+  encryption_key: ${password:48}
 
 config:
   domains:

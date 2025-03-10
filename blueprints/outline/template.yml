@@ -1,10 +1,10 @@
 variables:
   main_domain: ${randomDomain}
   dex_domain: ${randomDomain}
-  secret_key: ${generateBase64(32)}
-  utils_secret: ${generateBase64(32)}
-  client_secret: ${generateBase64(32)}
-  postgres_password: ${generatePassword()}
+  secret_key: ${base64:32}
+  utils_secret: ${base64:32}
+  client_secret: ${base64:32}
+  postgres_password: ${password}
 
 config:
   domains:

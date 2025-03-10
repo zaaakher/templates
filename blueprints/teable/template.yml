@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  db_password: ${generatePassword()}
+  db_password: ${password}
   public_db_port: ${Math.round(Math.random() * (65534 - 32769) + 32769)}
 
 config:

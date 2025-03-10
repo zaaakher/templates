@@ -1,8 +1,8 @@
 variables:
   main_domain: ${randomDomain}
-  secret_base: ${generateBase64(64)}
-  encryption_key: ${generateBase64(48)}
-  cron_secret: ${generateBase64(32)}
+  secret_base: ${base64:64}
+  encryption_key: ${base64:48}
+  cron_secret: ${base64:32}
 
 config:
   domains:

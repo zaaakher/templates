@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  auth_secret: ${generateBase64(32)}
+  auth_secret: ${base64:32}
 
 config:
   domains:

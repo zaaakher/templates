@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  registration_token: ${generatePassword(20)}
+  registration_token: ${password:20}
 
 config:
   domains:

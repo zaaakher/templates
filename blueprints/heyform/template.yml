@@ -1,7 +1,7 @@
 variables:
   main_domain: ${randomDomain}
-  session_key: ${generateBase64(64)}
-  form_encryption_key: ${generateBase64(64)}
+  session_key: ${base64:64}
+  form_encryption_key: ${base64:64}
 
 config:
   domains:

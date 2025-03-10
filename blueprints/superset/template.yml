@@ -1,8 +1,8 @@
 variables:
   main_domain: ${randomDomain}
-  secret_key: ${generatePassword(30)}
-  postgres_password: ${generatePassword(30)}
-  redis_password: ${generatePassword(30)}
+  secret_key: ${password:30}
+  postgres_password: ${password:30}
+  redis_password: ${password:30}
   mapbox_api_key: ""
 
 config:

@@ -1,7 +1,7 @@
 variables:
   main_domain: ${randomDomain}
-  directus_secret: ${generateBase64(64)}
-  database_password: ${generatePassword}
+  directus_secret: ${base64:64}
+  database_password: ${password}
 
 config:
   domains:

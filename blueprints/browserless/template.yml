@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  browserless_token: ${generatePassword(16)}
+  browserless_token: ${password:16}
 
 config:
   domains:

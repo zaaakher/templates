@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  secret_key: ${generatePassword(64)}
+  secret_key: ${password:64}
 
 config:
   domains:

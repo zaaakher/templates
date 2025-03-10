@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  initial_api_key: ${generatePassword(30)}
+  initial_api_key: ${password:30}
 
 config:
   domains:

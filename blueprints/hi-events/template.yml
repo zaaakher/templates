@@ -1,8 +1,8 @@
 variables:
   main_domain: ${randomDomain}
-  postgres_password: ${generatePassword}
-  jwt_secret: ${generatePassword}
-  app_key: ${generatePassword}
+  postgres_password: ${password}
+  jwt_secret: ${password}
+  app_key: ${password}
 
 config:
   domains:

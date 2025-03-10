@@ -1,13 +1,13 @@
 variables:
   main_domain: ${randomDomain}
-  api_key: ${generatePassword(32)}
-  encryption_key: ${generatePassword(32)}
-  jwt_secret: ${generatePassword(32)}
-  couchdb_password: ${generatePassword(32)}
-  redis_password: ${generatePassword(32)}
-  minio_access_key: ${generatePassword(32)}
-  minio_secret_key: ${generatePassword(32)}
-  watchtower_password: ${generatePassword(32)}
+  api_key: ${password:32}
+  encryption_key: ${password:32}
+  jwt_secret: ${password:32}
+  couchdb_password: ${password:32}
+  redis_password: ${password:32}
+  minio_access_key: ${password:32}
+  minio_secret_key: ${password:32}
+  watchtower_password: ${password:32}
 
 config:
   domains:

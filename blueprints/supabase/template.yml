@@ -1,9 +1,9 @@
 variables:
   main_domain: ${randomDomain}
-  postgres_password: ${generatePassword(32)}
-  jwt_secret: ${generateBase64(32)}
-  dashboard_password: ${generatePassword(32)}
-  logflare_api_key: ${generatePassword(32)}
+  postgres_password: ${password:32}
+  jwt_secret: ${base64:32}
+  dashboard_password: ${password:32}
+  logflare_api_key: ${password:32}
 
 config:
   domains:

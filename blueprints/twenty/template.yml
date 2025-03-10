@@ -1,8 +1,8 @@
 variables:
   main_domain: ${randomDomain}
-  db_password: ${generatePassword()}
+  db_password: ${password}
   db_user: "twenty"
-  app_secret: ${generateBase64(32)}
+  app_secret: ${base64:32}
 
 config:
   domains:

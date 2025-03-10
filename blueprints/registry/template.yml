@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  registry_http_secret: ${generatePassword(30)}
+  registry_http_secret: ${password:30}
 
 config:
   domains:

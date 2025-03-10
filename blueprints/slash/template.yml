@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  db_password: ${generatePassword()}
+  db_password: ${password}
   db_user: "slash"
   db_name: "slash"
 

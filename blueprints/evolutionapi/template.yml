@@ -1,7 +1,7 @@
 variables:
   main_domain: ${randomDomain}
-  api_key: ${generateBase64(64)}
-  postgres_password: ${generatePassword}
+  api_key: ${base64:64}
+  postgres_password: ${password}
 
 config:
   domains:

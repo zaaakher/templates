@@ -1,6 +1,6 @@
 variables:
   main_domain: ${randomDomain}
-  huly_secret: ${generateBase64(64)}
+  huly_secret: ${base64:64}
 
 config:
   domains:

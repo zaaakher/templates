@@ -1,9 +1,9 @@
 variables:
   main_domain: ${randomDomain}
-  admin_password: ${generatePassword(32)}
-  mysql_password: ${generatePassword(32)}
-  mysql_root_password: ${generatePassword(32)}
-  app_secret: ${generatePassword(32)}
+  admin_password: ${password:32}
+  mysql_password: ${password:32}
+  mysql_root_password: ${password:32}
+  app_secret: ${password:32}
 
 config:
   domains:

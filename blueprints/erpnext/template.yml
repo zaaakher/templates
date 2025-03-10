@@ -1,7 +1,7 @@
 variables:
   main_domain: ${randomDomain}
-  db_root_password: ${generatePassword(32)}
-  admin_password: ${generatePassword(32)}
+  db_root_password: ${password:32}
+  admin_password: ${password:32}
 
 config:
   domains:

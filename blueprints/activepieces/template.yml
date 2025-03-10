@@ -1,9 +1,9 @@
 variables:
   main_domain: ${randomDomain}
-  api_key: ${generatePassword(32)}
-  encryption_key: ${generatePassword(32)}
-  jwt_secret: ${generatePassword(32)}
-  postgres_password: ${generatePassword(32)}
+  api_key: ${password:32}
+  encryption_key: ${password:32}
+  jwt_secret: ${password:32}
+  postgres_password: ${password:32}
 
 config:
   domains:

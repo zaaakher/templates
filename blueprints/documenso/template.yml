@@ -1,8 +1,8 @@
 variables:
   main_domain: ${randomDomain}
-  nextauth_secret: ${generateBase64(32)}
-  encryption_key: ${generatePassword(32)}
-  secondary_encryption_key: ${generatePassword(64)}
+  nextauth_secret: ${base64:32}
+  encryption_key: ${password:32}
+  secondary_encryption_key: ${password:64}
 
 config:
   domains:

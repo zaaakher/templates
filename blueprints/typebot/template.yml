@@ -1,7 +1,7 @@
 variables:
   builder_domain: ${randomDomain}
   viewer_domain: ${randomDomain}
-  encryption_secret: ${generateBase64(24)}
+  encryption_secret: ${base64:24}
 
 config:
   domains:

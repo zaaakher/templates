@@ -1,11 +1,11 @@
 variables:
   main_domain: ${randomDomain}
-  magic_link_secret: ${generateBase64(16)}
-  session_secret: ${generateBase64(16)}
-  encryption_key: ${generateBase64(32)}
-  provider_secret: ${generateBase64(32)}
-  coordinator_secret: ${generateBase64(32)}
-  db_password: ${generateBase64(24)}
+  magic_link_secret: ${base64:16}
+  session_secret: ${base64:16}
+  encryption_key: ${base64:32}
+  provider_secret: ${base64:32}
+  coordinator_secret: ${base64:32}
+  db_password: ${base64:24}
   db_user: "triggeruser"
   db_name: "triggerdb"
 

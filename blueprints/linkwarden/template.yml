@@ -1,7 +1,7 @@
 variables:
   main_domain: ${randomDomain}
-  postgres_password: ${generatePassword()}
-  next_secret: ${generateBase64(32)}
+  postgres_password: ${password}
+  next_secret: ${base64:32}
 
 config:
   domains:

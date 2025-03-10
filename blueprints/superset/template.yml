@@ -1,5 +1,5 @@
 variables:
-  main_domain: ${randomDomain}
+  main_domain: ${domain}
   secret_key: ${password:30}
   postgres_password: ${password:30}
   redis_password: ${password:30}

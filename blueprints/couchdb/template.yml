@@ -1,5 +1,5 @@
 variables:
-  main_domain: ${randomDomain}
+  main_domain: ${domain}
   username: ${password:16}
   password: ${password:32}
 

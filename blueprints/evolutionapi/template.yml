@@ -1,5 +1,5 @@
 variables:
-  main_domain: ${randomDomain}
+  main_domain: ${domain}
   api_key: ${base64:64}
   postgres_password: ${password}
 

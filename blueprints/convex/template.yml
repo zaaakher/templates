@@ -1,7 +1,7 @@
 variables:
-  dashboard_domain: ${randomDomain}
-  backend_domain: ${randomDomain}
-  actions_domain: ${randomDomain}
+  dashboard_domain: ${domain}
+  backend_domain: ${domain}
+  actions_domain: ${domain}
 
 config:
   domains:

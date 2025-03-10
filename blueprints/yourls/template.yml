@@ -1,5 +1,5 @@
 variables:
-  main_domain: ${randomDomain}
+  main_domain: ${domain}
   mysql_password: ${password}
   mysql_root_password: ${password}
   admin_password: ${password}

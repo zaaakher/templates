@@ -1,6 +1,6 @@
 variables:
-  main_domain: ${randomDomain}
-  admin_domain: ${randomDomain}
+  main_domain: ${domain}
+  admin_domain: ${domain}
   postgres_password: ${password}
 
 config:

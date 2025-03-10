@@ -1,5 +1,5 @@
 variables:
-  main_domain: ${randomDomain}
+  main_domain: ${domain}
   calcom_encryption_key: ${base64:32}
   nextauth_secret: ${base64:32}
 

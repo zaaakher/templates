@@ -1,5 +1,5 @@
 variables:
-  main_domain: ${randomDomain}
+  main_domain: ${domain}
   api_key: ${password:32}
   encryption_key: ${password:32}
   jwt_secret: ${password:32}

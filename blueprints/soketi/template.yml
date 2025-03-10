@@ -1,6 +1,6 @@
 variables:
-  main_domain: ${randomDomain}
-  metrics_domain: ${randomDomain}
+  main_domain: ${domain}
+  metrics_domain: ${domain}
 
 config:
   domains:

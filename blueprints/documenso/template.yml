@@ -1,5 +1,5 @@
 variables:
-  main_domain: ${randomDomain}
+  main_domain: ${domain}
   nextauth_secret: ${base64:32}
   encryption_key: ${password:32}
   secondary_encryption_key: ${password:64}

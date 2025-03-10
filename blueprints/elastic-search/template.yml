@@ -1,6 +1,6 @@
 variables:
-  main_domain: ${randomDomain}
-  api_domain: ${randomDomain}
+  main_domain: ${domain}
+  api_domain: ${domain}
 
 config:
   domains:

@@ -1,5 +1,5 @@
 variables:
-  main_domain: ${randomDomain}
+  main_domain: ${domain}
   postgres_password: ${password}
   next_secret: ${base64:32}
   meili_master_key: ${base64:32}

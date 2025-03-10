@@ -1,6 +1,6 @@
 variables:
-  main_domain: ${randomDomain}
-  dex_domain: ${randomDomain}
+  main_domain: ${domain}
+  dex_domain: ${domain}
   secret_key: ${base64:32}
   utils_secret: ${base64:32}
   client_secret: ${base64:32}

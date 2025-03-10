@@ -1,5 +1,5 @@
 variables:
-  main_domain: ${randomDomain}
+  main_domain: ${domain}
   db_password: ${password}
   db_user: "twenty"
   app_secret: ${base64:32}

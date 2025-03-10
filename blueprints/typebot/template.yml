@@ -1,6 +1,6 @@
 variables:
-  builder_domain: ${randomDomain}
-  viewer_domain: ${randomDomain}
+  builder_domain: ${domain}
+  viewer_domain: ${domain}
   encryption_secret: ${base64:24}
 
 config:

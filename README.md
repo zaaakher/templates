@@ -12,7 +12,8 @@ This is the official repository for the Dokploy Open Source Templates.
 6. Commit and push your changes
 7. Create a pull request (PR)
 8. Every PR will automatically deploy a preview of the template to Dokploy.
-9. if anyone want to test the template before merging it, you can enter to the preview URL in the PR description, and search the template, click on the Template Card, scroll down and then copy the BASE64 value, and paste in the advanced section of your compose service, in the Import section.
+9. if anyone want to test the template before merging it, you can enter to the preview URL in the PR description, and search the template, click on the Template Card, scroll down and then copy the BASE64 value, and paste in the advanced section of your compose service, in the Import section or optional you can use the preview URL and paste in the
+BASE URL when creating a template. 
 
 #### Optional
 

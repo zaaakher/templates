@@ -26,4 +26,4 @@ jobs:
         with:
           message: |
             🚀 PR Preview deployed!
-            👉 [View it here](https://<USERNAME>.github.io/<REPO>/pr-${{ github.event.pull_request.number }}/)
+            👉 [View it here](https://dokploy.github.io/templates/pr-${{ github.event.pull_request.number }}/)

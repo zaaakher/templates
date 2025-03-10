@@ -1,0 +1,12 @@
+variables:
+  main_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: influxdb
+      port: 8086
+      host: ${main_domain}
+
+  env: {}
+
+  mounts: [] 

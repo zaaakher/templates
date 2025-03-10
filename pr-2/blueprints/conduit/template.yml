@@ -1,0 +1,13 @@
+variables:
+  main_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: homeserver
+      port: 6167
+      host: ${main_domain}
+
+  env:
+    - MATRIX_SUBDOMAIN=${main_domain}
+
+  mounts: [] 

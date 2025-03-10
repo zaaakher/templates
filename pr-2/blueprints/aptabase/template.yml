@@ -1,0 +1,15 @@
+variables:
+  main_domain: ${randomDomain}
+  auth_secret: ${base64:32}
+
+config:
+  domains:
+    - serviceName: aptabase
+      port: 8080
+      host: ${main_domain}
+
+  env:
+    - APTABASE_HOST=${main_domain}
+    - AUTH_SECRET=${auth_secret}
+
+  mounts: [] 

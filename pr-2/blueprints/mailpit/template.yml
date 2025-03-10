@@ -1,0 +1,16 @@
+variables:
+  main_domain: ${randomDomain}
+  default_password: ${password}
+
+config:
+  domains:
+    - serviceName: mailpit
+      port: 8025
+      host: ${main_domain}
+
+  env:
+    # Uncomment below if you want basic auth on UI and SMTP
+    #MP_UI_AUTH: mailpit:${default_password}
+    #MP_SMTP_AUTH: mailpit:${default_password}
+
+  mounts: [] 

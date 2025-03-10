@@ -1,0 +1,14 @@
+variables:
+  main_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: rocketchat
+      port: 3000
+      host: ${main_domain}
+
+  env:
+    ROCKETCHAT_HOST: ${main_domain}
+    ROCKETCHAT_PORT: "3000"
+
+  mounts: [] 

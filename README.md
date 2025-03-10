@@ -71,8 +71,8 @@ config:
 Dokploy use a defined structure for the `template.yml` file, we have 4 sections available:
 
 
-1. `variables`: This is where we define the variables that will be used in the `config` section.
-2. `config`: This is where we define the configuration for the template.
+1. `variables`: This is where we define the variables that will be used in the `domains`, `env` and `mounts` sections.
+2. `domains`: This is where we define the configuration for the template.
 3. `env`: This is where we define the environment variables for the template.
 4. `mounts`: This is where we define the mounts for the template.
 

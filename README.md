@@ -4,12 +4,15 @@ This is the official repository for the Dokploy Open Source Templates.
 
 ### How to add a new template
 
-1. Clone the repository
-2. Add the template to the `blueprints` folder (docker-compose.yml, template.yml)
-3. Add the template metadata (name, description, version, logo, links, tags) to the `meta.json` file
-4. Add the logo to the template folder
-5. Commit and push your changes
-6. Create a pull request
+1. Fork the repository
+2. Create a new branch
+3. Add the template to the `blueprints` folder (docker-compose.yml, template.yml)
+4. Add the template metadata (name, description, version, logo, links, tags) to the `meta.json` file
+5. Add the logo to the template folder
+6. Commit and push your changes
+7. Create a pull request (PR)
+8. Every PR will automatically deploy a preview of the template to Dokploy.
+9. if anyone want to test the template before merging it, you can enter to the preview URL in the PR description, and search the template, click on the Template Card, scroll down and then copy the BASE64 value, and paste in the advanced section of your compose service, in the Import section.
 
 ### Example
 

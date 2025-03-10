@@ -1,0 +1,13 @@
+variables:
+  main_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: client
+      port: 80
+      host: ${main_domain}
+
+  env:
+    - DOMAIN=${main_domain}
+
+  mounts: [] 

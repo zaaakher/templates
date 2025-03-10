@@ -1,0 +1,12 @@
+variables:
+  main_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: metabase
+      port: 3000
+      host: ${main_domain}
+
+  env: {}
+
+  mounts: [] 

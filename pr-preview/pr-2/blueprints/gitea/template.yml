@@ -1,0 +1,14 @@
+variables:
+  main_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: gitea
+      port: 3000
+      host: ${main_domain}
+
+  env:
+    - USER_UID=1000
+    - USER_GID=1000
+
+  mounts: [] 

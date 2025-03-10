@@ -1,0 +1,17 @@
+variables:
+  main_domain: ${randomDomain}
+  calcom_encryption_key: ${generateBase64(32)}
+  nextauth_secret: ${generateBase64(32)}
+
+config:
+  domains:
+    - serviceName: calcom
+      port: 3000
+      host: ${main_domain}
+
+  env:
+    - CALCOM_HOST=${main_domain}
+    - NEXTAUTH_SECRET=${nextauth_secret}
+    - CALENDSO_ENCRYPTION_KEY=${calcom_encryption_key}
+
+  mounts: [] 

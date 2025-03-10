@@ -1,0 +1,14 @@
+variables:
+  main_domain: ${randomDomain}
+  secret_key: ${generatePassword(64)}
+
+config:
+  domains:
+    - serviceName: homarr
+      port: 7575
+      host: ${main_domain}
+
+  env:
+    - SECRET_ENCRYPTION_KEY=${secret_key}
+
+  mounts: [] 

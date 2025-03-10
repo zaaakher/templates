@@ -1,0 +1,16 @@
+variables:
+  main_domain: ${randomDomain}
+  api_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: kibana
+      port: 5601
+      host: ${main_domain}
+    - serviceName: elasticsearch
+      port: 9200
+      host: ${api_domain}
+
+  env: []
+
+  mounts: [] 

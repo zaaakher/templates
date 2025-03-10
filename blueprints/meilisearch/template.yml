@@ -1,0 +1,15 @@
+variables:
+  main_domain: ${randomDomain}
+  master_key: ${generateBase64(32)}
+
+config:
+  domains:
+    - serviceName: meilisearch
+      port: 7700
+      host: ${main_domain}
+
+  env:
+    MEILI_ENV: "development"
+    MEILI_MASTER_KEY: ${master_key}
+
+  mounts: [] 

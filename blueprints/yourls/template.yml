@@ -1,0 +1,20 @@
+variables:
+  main_domain: ${randomDomain}
+  mysql_password: ${generatePassword()}
+  mysql_root_password: ${generatePassword()}
+  admin_password: ${generatePassword()}
+
+config:
+  domains:
+    - serviceName: yourls-app
+      port: 80
+      host: ${main_domain}
+
+  env:
+    YOURLS_HOST: ${main_domain}
+    YOURLS_ADMIN_USER: "admin"
+    YOURLS_ADMIN_PASSWORD: ${admin_password}
+    MYSQL_PASSWORD: ${mysql_password}
+    MYSQL_ROOT_PASSWORD: ${mysql_root_password}
+
+  mounts: [] 

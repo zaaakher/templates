@@ -1,0 +1,15 @@
+variables:
+  main_domain: ${randomDomain}
+  browserless_token: ${generatePassword(16)}
+
+config:
+  domains:
+    - serviceName: browserless
+      port: 3000
+      host: ${main_domain}
+
+  env:
+    - BROWERLESS_HOST=${main_domain}
+    - BROWSERLESS_TOKEN=${browserless_token}
+
+  mounts: [] 

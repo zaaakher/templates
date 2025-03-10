@@ -1,0 +1,12 @@
+variables:
+  main_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: onedev
+      port: 6610
+      host: ${main_domain}
+
+  env: {}
+
+  mounts: [] 

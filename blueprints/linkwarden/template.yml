@@ -1,0 +1,17 @@
+variables:
+  main_domain: ${randomDomain}
+  postgres_password: ${generatePassword()}
+  next_secret: ${generateBase64(32)}
+
+config:
+  domains:
+    - serviceName: linkwarden
+      port: 3000
+      host: ${main_domain}
+
+  env:
+    POSTGRES_PASSWORD: ${postgres_password}
+    NEXTAUTH_SECRET: ${next_secret}
+    NEXTAUTH_URL: http://${main_domain}/api/v1/auth
+
+  mounts: [] 

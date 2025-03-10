@@ -1,0 +1,17 @@
+variables:
+  main_domain: ${randomDomain}
+  db_password: ${generatePassword()}
+  db_root_password: ${generatePassword()}
+
+config:
+  domains:
+    - serviceName: nextcloud
+      port: 80
+      host: ${main_domain}
+
+  env:
+    NEXTCLOUD_DOMAIN: ${main_domain}
+    MYSQL_SECRET_PASSWORD: ${db_password}
+    MYSQL_SECRET_PASSWORD_ROOT: ${db_root_password}
+
+  mounts: [] 

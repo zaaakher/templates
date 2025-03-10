@@ -1,0 +1,18 @@
+variables:
+  main_domain: ${randomDomain}
+  root_password: ${generatePassword(32)}
+  user_password: ${generatePassword(32)}
+
+config:
+  domains:
+    - serviceName: phpmyadmin
+      port: 80
+      host: ${main_domain}
+
+  env:
+    MYSQL_ROOT_PASSWORD: ${root_password}
+    MYSQL_DATABASE: "mysql"
+    MYSQL_USER: "phpmyadmin"
+    MYSQL_PASSWORD: ${user_password}
+
+  mounts: [] 

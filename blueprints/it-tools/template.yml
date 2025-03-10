@@ -1,0 +1,12 @@
+variables:
+  main_domain: ${randomDomain}
+
+config:
+  domains:
+    - serviceName: it-tools
+      port: 80
+      host: ${main_domain}
+
+  env: {}
+
+  mounts: [] 

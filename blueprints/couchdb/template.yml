@@ -1,0 +1,16 @@
+variables:
+  main_domain: ${randomDomain}
+  username: ${generatePassword(16)}
+  password: ${generatePassword(32)}
+
+config:
+  domains:
+    - serviceName: couchdb
+      port: 5984
+      host: ${main_domain}
+
+  env:
+    - COUCHDB_USER=${username}
+    - COUCHDB_PASSWORD=${password}
+
+  mounts: [] 

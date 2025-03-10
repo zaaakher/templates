@@ -1,0 +1,16 @@
+variables:
+  main_domain: ${randomDomain}
+  directus_secret: ${generateBase64(64)}
+  database_password: ${generatePassword}
+
+config:
+  domains:
+    - serviceName: directus
+      port: 8055
+      host: ${main_domain}
+
+  env:
+    - DATABASE_PASSWORD=${database_password}
+    - DIRECTUS_SECRET=${directus_secret}
+
+  mounts: [] 

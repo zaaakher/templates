@@ -1,0 +1,21 @@
+variables:
+  main_domain: ${randomDomain}
+  db_password: ${generatePassword()}
+  db_user: "postiz"
+  db_name: "postiz"
+  jwt_secret: ${generateBase64(32)}
+
+config:
+  domains:
+    - serviceName: postiz-app
+      port: 5000
+      host: ${main_domain}
+
+  env:
+    POSTIZ_HOST: ${main_domain}
+    DB_PASSWORD: ${db_password}
+    DB_USER: ${db_user}
+    DB_NAME: ${db_name}
+    JWT_SECRET: ${jwt_secret}
+
+  mounts: [] 

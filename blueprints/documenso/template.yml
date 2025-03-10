@@ -1,0 +1,20 @@
+variables:
+  main_domain: ${randomDomain}
+  nextauth_secret: ${generateBase64(32)}
+  encryption_key: ${generatePassword(32)}
+  secondary_encryption_key: ${generatePassword(64)}
+
+config:
+  domains:
+    - serviceName: documenso
+      port: 3000
+      host: ${main_domain}
+
+  env:
+    - DOCUMENSO_HOST=${main_domain}
+    - DOCUMENSO_PORT=3000
+    - NEXTAUTH_SECRET=${nextauth_secret}
+    - NEXT_PRIVATE_ENCRYPTION_KEY=${encryption_key}
+    - NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY=${secondary_encryption_key}
+
+  mounts: [] 

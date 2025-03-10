@@ -1,0 +1,18 @@
+variables:
+  main_domain: ${randomDomain}
+  initial_api_key: ${generatePassword(30)}
+
+config:
+  domains:
+    - serviceName: shlink-web
+      port: 8080
+      host: web-${main_domain}
+    - serviceName: shlink
+      port: 8080
+      host: ${main_domain}
+
+  env:
+    INITIAL_API_KEY: ${initial_api_key}
+    DEFAULT_DOMAIN: ${main_domain}
+
+  mounts: [] 

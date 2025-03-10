@@ -1,0 +1,15 @@
+variables:
+  main_domain: ${randomDomain}
+  service_hash: ${generateHash(projectName)}
+
+config:
+  domains:
+    - serviceName: answer
+      port: 9080
+      host: ${main_domain}
+
+  env:
+    - ANSWER_HOST=http://${main_domain}
+    - SERVICE_HASH=${service_hash}
+
+  mounts: [] 

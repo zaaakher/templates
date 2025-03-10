@@ -1,0 +1,15 @@
+variables:
+  main_domain: ${randomDomain}
+  secret_key: ${generatePassword()}
+
+config:
+  domains:
+    - serviceName: server
+      port: 8080
+      host: ${main_domain}
+
+  env:
+    SD_USERNAME: "admin"
+    SD_PASSWORD: ${secret_key}
+
+  mounts: [] 

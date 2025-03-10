@@ -110,7 +110,7 @@ config:
     - serviceName: grafana # Required
       port: 3000 # Required
       host: ${main_domain} # Required
-      path: / -> Optional
+      path: / # Optional
 
   env: # Optional
     - AP_HOST=${main_domain}

@@ -12,6 +12,7 @@ import { Button } from './ui/button';
 import { toast } from 'sonner';
 import copy from 'copy-to-clipboard';
 import { ModeToggle } from '../mode-toggle';
+import { CodeEditor } from './ui/code-editor';
 interface Template {
   id: string;
   name: string;
@@ -223,7 +224,7 @@ const TemplateGrid: React.FC = () => {
               <div>
                 <DialogTitle className="text-2xl">{selectedTemplate?.name}</DialogTitle>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-sm text-gray-500">v{selectedTemplate?.version}</span>
+                  <span className="text-sm text-gray-500">{selectedTemplate?.version}</span>
                   <div className="flex gap-2">
                     {selectedTemplate?.links.github && (
                       <a
@@ -245,6 +246,15 @@ const TemplateGrid: React.FC = () => {
                         Docs
                       </a>
                     )}
+
+                    <a
+                        href={`https://github.com/Dokploy/templates/tree/main/blueprints/${selectedTemplate?.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 hover:text-gray-900"
+                      >
+                        Edit Template
+                      </a>
                   </div>
                 </div>
               </div>
@@ -277,9 +287,11 @@ const TemplateGrid: React.FC = () => {
                     Docker Compose
                     <span className="text-xs font-normal text-gray-500">docker-compose.yml</span>
                   </h3>
-                  <pre className="bg-card border border-border p-6 rounded-lg overflow-x-auto text-sm">
-                    <code className="font-mono">{templateFiles.dockerCompose}</code>
-                  </pre>
+                  <CodeEditor
+                    value={templateFiles.dockerCompose || ''}
+                    language="yaml"
+                    className='font-mono'
+                  />
                   <Button
                       onClick={() => {
                         toast.success('Copied to clipboard')
@@ -297,9 +309,11 @@ const TemplateGrid: React.FC = () => {
                     Configuration
                     <span className="text-xs font-normal text-gray-500">template.yml</span>
                   </h3>
-                  <pre className="bg-card border border-border p-6 rounded-lg overflow-x-auto text-sm">
-                    <code className="font-mono">{templateFiles.config}</code>
-                  </pre>
+                  <CodeEditor
+                    value={templateFiles.config || ''}
+                    language="yaml"
+                    className='font-mono'
+                  />
 
                   <Button
                       onClick={() => {
@@ -319,10 +333,10 @@ const TemplateGrid: React.FC = () => {
                     <span className="text-xs font-normal text-gray-500">Encoded template files</span>
                   </h3>
                   <div className="relative">
-                    <textarea
-                      readOnly
-                      className="w-full h-32 p-4 bg-card border border-border rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    <CodeEditor
                       value={getBase64Config()}
+                      language="properties"
+                      className='font-mono'
                     />
                     <Button
                       onClick={() => {

@@ -4,6 +4,8 @@ variables:
   jwt_secret: ${base64:32}
   dashboard_password: ${password:32}
   logflare_api_key: ${password:32}
+  anon_key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzQxNTAwMDAwLAogICJleHAiOiAxODk5MjY2NDAwCn0.muKe0Nrvkf5bMyLoFqAuFypRu3jHAcTYU08SYKrgRQo
+  service_role_key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogInNlcnZpY2Vfcm9sZSIsCiAgImlzcyI6ICJzdXBhYmFzZSIsCiAgImlhdCI6IDE3NDE1MDAwMDAsCiAgImV4cCI6IDE4OTkyNjY0MDAKfQ.1KoSiJVueKJNkF59uc84BLqk7h8VdAoVp6Gozqr_vGc
 
 config:
   domains:
@@ -15,8 +17,8 @@ config:
     SUPABASE_HOST: ${main_domain}
     POSTGRES_PASSWORD: ${postgres_password}
     JWT_SECRET: ${jwt_secret}
-    ANON_KEY: ${generateJWT({ role: "anon", iss: "supabase", iat: Math.floor(Date.now() / 1000), exp: Math.floor(Date.now() / 1000) + 100 * 365 * 24 * 60 * 60 }, jwt_secret)}
-    SERVICE_ROLE_KEY: ${generateJWT({ role: "service_role", iss: "supabase", iat: Math.floor(Date.now() / 1000), exp: Math.floor(Date.now() / 1000) + 100 * 365 * 24 * 60 * 60 }, jwt_secret)}
+    ANON_KEY: ${anon_key}
+    SERVICE_ROLE_KEY: ${service_role_key}
     DASHBOARD_USERNAME: "supabase"
     DASHBOARD_PASSWORD: ${dashboard_password}
     POSTGRES_HOSTNAME: "db"

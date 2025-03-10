@@ -10,7 +10,7 @@ export default defineConfig({
 			targets: [
 				{
 					src: 'blueprints/*',
-					dest: '' // raíz de dist (public root)
+					dest: 'blueprints' // raíz de dist (public root)
 				},
 				{
 					src: 'meta.json',

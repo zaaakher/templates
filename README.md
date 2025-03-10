@@ -29,7 +29,7 @@ services:
 volumes:
   grafana-storage: {}
 ```
-3. Add the `template.yml` file to the folder, this is where we specify the domains, mounts and env variables, to understand more the structure of `template.yml` you can read here []
+3. Add the `template.yml` file to the folder, this is where we specify the domains, mounts and env variables, to understand more the structure of `template.yml` you can read here [Template.yml structure](#templateyml-structure)
 
 ```yaml
 variables:
@@ -46,21 +46,21 @@ config:
 4. Add the `meta.json` file to the folder
 
 ```json
-    {
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "9.5.20",
-      "description": "Grafana is an open source platform for data visualization and monitoring.",
-      "logo": "grafana.svg",
-      "links": {
-        "github": "https://github.com/grafana/grafana",
-        "website": "https://grafana.com/",
-        "docs": "https://grafana.com/docs/"
-      },
-      "tags": [
-        "monitoring"
-      ]
-    },
+{
+  "id": "grafana",
+  "name": "Grafana",
+  "version": "9.5.20",
+  "description": "Grafana is an open source platform for data visualization and monitoring.",
+  "logo": "grafana.svg",
+  "links": {
+    "github": "https://github.com/grafana/grafana",
+    "website": "https://grafana.com/",
+    "docs": "https://grafana.com/docs/"
+  },
+  "tags": [
+    "monitoring"
+  ]
+},
 ```
 5. Add the logo to the folder
 6. Commit and push your changes

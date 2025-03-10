@@ -18,11 +18,13 @@ jobs:
       - uses: actions/checkout@v4
 
       # Si no tienes build, solo copia los archivos
-      - name: Prepare static preview folder
-        run: |
-          mkdir -p preview
-          cp meta.json preview/
-          cp -r blueprints preview/
+    - name: Prepare static preview folder
+      run: |
+        mkdir -p preview
+        cp meta.json preview/
+        cp -r blueprints preview/
+        echo "<h1>Preview for PR #${{ github.event.pull_request.number }}</h1>" > preview/index.html
+
 
       # Despliega el preview usando el action
       - uses: rossjrw/pr-preview-action@v1

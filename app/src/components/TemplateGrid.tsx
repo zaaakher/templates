@@ -272,7 +272,7 @@ const TemplateGrid: React.FC = () => {
           ) : (
             <div className="grid gap-8 mt-6">
               {templateFiles?.dockerCompose && (
-                <div>
+                <div className='max-w-6xl w-full relative'>
                   <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     Docker Compose
                     <span className="text-xs font-normal text-gray-500">docker-compose.yml</span>
@@ -280,10 +280,19 @@ const TemplateGrid: React.FC = () => {
                   <pre className="bg-card border border-border p-6 rounded-lg overflow-x-auto text-sm">
                     <code className="font-mono">{templateFiles.dockerCompose}</code>
                   </pre>
+                  <Button
+                      onClick={() => {
+                        toast.success('Copied to clipboard')
+                        copy(templateFiles.dockerCompose || '')
+                      }}
+                      className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
+                    >
+                      Copy
+                    </Button>
                 </div>
               )}
               {templateFiles?.config && (
-                <div>
+                <div  className='max-w-6xl w-full relative'>
                   <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     Configuration
                     <span className="text-xs font-normal text-gray-500">template.yml</span>
@@ -291,10 +300,20 @@ const TemplateGrid: React.FC = () => {
                   <pre className="bg-card border border-border p-6 rounded-lg overflow-x-auto text-sm">
                     <code className="font-mono">{templateFiles.config}</code>
                   </pre>
+
+                  <Button
+                      onClick={() => {
+                        toast.success('Copied to clipboard')
+                        copy(templateFiles.config || '')
+                      }}
+                      className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
+                    >
+                      Copy
+                    </Button>
                 </div>
               )}
               {(templateFiles?.dockerCompose || templateFiles?.config) && (
-                <div>
+                <div  className='max-w-6xl w-full'>
                   <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     Base64 Configuration
                     <span className="text-xs font-normal text-gray-500">Encoded template files</span>

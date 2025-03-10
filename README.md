@@ -19,6 +19,7 @@ This is the official repository for the Dokploy Open Source Templates.
 If you want to run the project locally, you can run the project with the following command:
 
 ```bash
+cd app
 pnpm install
 pnpm run dev
 go to http://localhost:5173/

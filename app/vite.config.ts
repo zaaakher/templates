@@ -9,11 +9,11 @@ export default defineConfig({
     viteStaticCopy({
 			targets: [
 				{
-					src: 'blueprints/*',
+					src: '../blueprints/*',
 					dest: 'blueprints' // raíz de dist (public root)
 				},
 				{
-					src: 'meta.json',
+					src: '../meta.json',
 					dest: '' // raíz de dist
 				}
 			]

@@ -13,6 +13,7 @@ services:
       - MEILI_ADDR=http://meilisearch:7700
       - BROWSER_WEB_URL=http://chrome:9222
       - DATA_DIR=/data
+      - MEILI_MASTER_KEY
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:124
     restart: unless-stopped
@@ -28,7 +29,7 @@ services:
     restart: unless-stopped
     environment:
       - MEILI_MASTER_KEY
-      - MEILI_NO_ANALYTICS="true"
+      - MEILI_NO_ANALYTICS=true
     volumes:
       - meilisearch-data:/meili_data
     healthcheck:

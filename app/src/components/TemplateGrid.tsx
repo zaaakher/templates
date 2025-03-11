@@ -46,8 +46,8 @@ const TemplateGrid: React.FC = () => {
   const { templates, setTemplates } = useStore();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const searchQuery = useStore((state) => state.searchQuery);
-  const selectedTags = useStore((state) => state.selectedTags);
+  const { addSelectedTag, searchQuery, selectedTags } = useStore();
+
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null
   );
@@ -160,9 +160,8 @@ const TemplateGrid: React.FC = () => {
               <Card
                 key={template.id}
                 className=" cursor-pointer hover:shadow-lg transition-all duration-200 h-full max-h-[300px]"
-                onClick={() => handleTemplateClick(template)}
               >
-                <CardHeader>
+                <CardHeader onClick={() => handleTemplateClick(template)}>
                   <CardTitle className="text-xl ">
                     <img
                       src={`/blueprints/${template.id}/${template.logo}`}
@@ -179,6 +178,7 @@ const TemplateGrid: React.FC = () => {
                   <div className="mt-2 flex flex-wrap gap-1">
                     {template.tags.slice(0, 3).map((tag) => (
                       <span
+                        onClick={() => addSelectedTag(tag)}
                         key={tag}
                         className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800"
                       >
@@ -187,7 +187,10 @@ const TemplateGrid: React.FC = () => {
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter className="flex justify-between items-center">
+                <CardFooter
+                  className="flex justify-between items-center"
+                  onClick={() => handleTemplateClick(template)}
+                >
                   <span className="text-sm text-gray-500">
                     {template.version}
                   </span>

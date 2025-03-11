@@ -259,7 +259,7 @@ const TemplateGrid: React.FC<TemplateGridProps> = ({ view }) => {
         open={!!selectedTemplate}
         onOpenChange={() => setSelectedTemplate(null)}
       >
-        <DialogContent className="max-w-[90vw] w-full lg:max-w-[90vw] max-h-[85vh] overflow-y-auto p-0">
+        <DialogContent className="!max-w-[90vw] w-full lg:max-w-[90vw] max-h-[85vh] overflow-y-auto p-0">
           <DialogHeader className="space-y-4 border-b sticky top-0 p-4 bg-background z-10">
             <div className="flex items-center gap-4">
               {selectedTemplate?.logo && (
@@ -313,7 +313,7 @@ const TemplateGrid: React.FC<TemplateGridProps> = ({ view }) => {
             </div>
           </DialogHeader>
 
-          <div className="p-6 pt-3  flex flex-col gap-2">
+          <div className="p-6 pt-3 max-w-[100%] flex flex-col gap-2">
             <DialogDescription className="text-base">
               {selectedTemplate?.description}
             </DialogDescription>
@@ -374,7 +374,7 @@ const TemplateGrid: React.FC<TemplateGridProps> = ({ view }) => {
                   </TabsList>
                   <TabsContent value="docker-compose">
                     {templateFiles?.dockerCompose && (
-                      <div className="max-w-6xl w-full relative">
+                      <div className=" flex flex-col relative">
                         <Label className=" flex mb-2 flex-col items-start w-fit justify-start gap-1">
                           <span className="leading-tight text-xl font-semibold">
                             Docker Compose

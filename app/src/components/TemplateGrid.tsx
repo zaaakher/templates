@@ -187,6 +187,7 @@ const TemplateGrid: React.FC<TemplateGridProps> = ({ view }) => {
             filteredTemplates.map((template) => (
               <Card
                 key={template.id}
+                onClick={() => handleTemplateClick(template)}
                 className={cn(
                   " cursor-pointer hover:shadow-lg transition-all duration-200 h-full max-h-[300px]",
                   {
@@ -195,7 +196,7 @@ const TemplateGrid: React.FC<TemplateGridProps> = ({ view }) => {
                   }
                 )}
               >
-                <CardHeader onClick={() => handleTemplateClick(template)}>
+                <CardHeader>
                   <CardTitle className="text-xl ">
                     <img
                       src={`/blueprints/${template.id}/${template.logo}`}
@@ -209,10 +210,13 @@ const TemplateGrid: React.FC<TemplateGridProps> = ({ view }) => {
                   <p className="text-sm text-muted-foreground line-clamp-2">
                     {template.description}
                   </p>
-                  <div className="mt-2 flex flex-wrap gap-1">
+                  <div className="mt-2 flex flex-wrap gap-1 w-fit">
                     {template.tags.slice(0, 3).map((tag) => (
                       <span
-                        onClick={() => addSelectedTag(tag)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addSelectedTag(tag);
+                        }}
                         key={tag}
                         className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800"
                       >
@@ -221,10 +225,7 @@ const TemplateGrid: React.FC<TemplateGridProps> = ({ view }) => {
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter
-                  className="flex justify-between items-center"
-                  onClick={() => handleTemplateClick(template)}
-                >
+                <CardFooter className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">
                     {template.version}
                   </span>

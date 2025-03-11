@@ -46,7 +46,8 @@ const TemplateGrid: React.FC = () => {
   const { templates, setTemplates } = useStore();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const searchQuery = useStore((state) => state.searchQuery);
+  const selectedTags = useStore((state) => state.selectedTags);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null
   );
@@ -102,9 +103,21 @@ const TemplateGrid: React.FC = () => {
     fetchTemplateFiles(template.id);
   };
 
-  const filteredTemplates = templates.filter((template) =>
-    template.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTemplates = templates.filter((template) => {
+    // Filter by search query
+    const matchesSearch = template.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    // Filter by selected tags
+    const matchesTags =
+      selectedTags.length === 0 ||
+      selectedTags.every((tag) => template.tags.includes(tag));
+
+    return matchesSearch && matchesTags;
+  });
+
+  console.log(filteredTemplates);
 
   const getBase64Config = () => {
     if (!templateFiles?.dockerCompose && !templateFiles?.config) return "";
@@ -141,40 +154,12 @@ const TemplateGrid: React.FC = () => {
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold text-center  mb-8">
-          Available Templates ({templates.length})
-        </h1>
-        <div className="max-w-xl mx-auto mb-12">
-          <div className="relative">
-            <Input
-              type="text"
-              placeholder="Search templates..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full"
-            />
-            <svg
-              className="absolute right-3 top-3 h-5 w-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredTemplates.length > 0 ? (
             filteredTemplates.map((template) => (
               <Card
                 key={template.id}
-                className="cursor-pointer hover:shadow-lg transition-all duration-200 h-full"
+                className=" cursor-pointer hover:shadow-lg transition-all duration-200 h-full max-h-[300px]"
                 onClick={() => handleTemplateClick(template)}
               >
                 <CardHeader>
@@ -204,7 +189,7 @@ const TemplateGrid: React.FC = () => {
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">
-                    v{template.version}
+                    {template.version}
                   </span>
                   <svg
                     className="w-4 h-4 text-gray-400"

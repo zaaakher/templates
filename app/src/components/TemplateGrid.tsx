@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { Input } from './ui/input';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from './ui/card';
+import React, { useEffect, useState } from "react";
+import { Input } from "./ui/input";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "./ui/card";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from './ui/dialog';
-import { Button } from './ui/button';
-import { toast } from 'sonner';
-import copy from 'copy-to-clipboard';
-import { ModeToggle } from '../mode-toggle';
-import { CodeEditor } from './ui/code-editor';
+} from "./ui/dialog";
+import { Button } from "./ui/button";
+import { toast } from "sonner";
+import copy from "copy-to-clipboard";
+import { ModeToggle } from "../mode-toggle";
+import { CodeEditor } from "./ui/code-editor";
+import { useStore } from "../store";
+
 interface Template {
   id: string;
   name: string;
@@ -33,47 +41,53 @@ interface TemplateFiles {
 }
 
 const TemplateGrid: React.FC = () => {
-  const [templates, setTemplates] = useState<Template[]>([]);
+  const { templates, setTemplates } = useStore();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
-  const [templateFiles, setTemplateFiles] = useState<TemplateFiles | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
+    null
+  );
+  const [templateFiles, setTemplateFiles] = useState<TemplateFiles | null>(
+    null
+  );
   const [modalLoading, setModalLoading] = useState(false);
 
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
-        const response = await fetch('/meta.json');
+        const response = await fetch("/meta.json");
         if (!response.ok) {
-          throw new Error('Failed to fetch templates');
+          throw new Error("Failed to fetch templates");
         }
         const data = await response.json();
         setTemplates(data);
         setLoading(false);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        setError(err instanceof Error ? err.message : "An error occurred");
         setLoading(false);
       }
     };
 
     fetchTemplates();
-  }, []);
+  }, [setTemplates]);
 
   const fetchTemplateFiles = async (templateId: string) => {
     setModalLoading(true);
     try {
       const [dockerComposeRes, configRes] = await Promise.all([
         fetch(`/blueprints/${templateId}/docker-compose.yml`),
-        fetch(`/blueprints/${templateId}/template.yml`)
+        fetch(`/blueprints/${templateId}/template.yml`),
       ]);
 
-      const dockerCompose = dockerComposeRes.ok ? await dockerComposeRes.text() : null;
+      const dockerCompose = dockerComposeRes.ok
+        ? await dockerComposeRes.text()
+        : null;
       const config = configRes.ok ? await configRes.text() : null;
 
       setTemplateFiles({ dockerCompose, config });
     } catch (err) {
-      console.error('Error fetching template files:', err);
+      console.error("Error fetching template files:", err);
       setTemplateFiles({ dockerCompose: null, config: null });
     } finally {
       setModalLoading(false);
@@ -91,11 +105,11 @@ const TemplateGrid: React.FC = () => {
   );
 
   const getBase64Config = () => {
-    if (!templateFiles?.dockerCompose && !templateFiles?.config) return '';
-    
+    if (!templateFiles?.dockerCompose && !templateFiles?.config) return "";
+
     const configObj = {
-      compose: templateFiles.dockerCompose || '',
-      config: templateFiles.config || ''
+      compose: templateFiles.dockerCompose || "",
+      config: templateFiles.config || "",
     };
 
     return btoa(JSON.stringify(configObj, null, 2));
@@ -114,7 +128,9 @@ const TemplateGrid: React.FC = () => {
   if (error) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold text-center text-gray-900 mb-4">Error</h1>
+        <h1 className="text-4xl font-bold text-center text-gray-900 mb-4">
+          Error
+        </h1>
         <p className="text-center text-red-600">{error}</p>
       </div>
     );
@@ -125,7 +141,6 @@ const TemplateGrid: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold text-center  mb-8">
           Available Templates ({templates.length})
-          <ModeToggle />
         </h1>
         <div className="max-w-xl mx-auto mb-12">
           <div className="relative">
@@ -157,20 +172,23 @@ const TemplateGrid: React.FC = () => {
             filteredTemplates.map((template) => (
               <Card
                 key={template.id}
-                className="cursor-pointer hover:shadow-lg transition-all duration-200 h-fit"
+                className="cursor-pointer hover:shadow-lg transition-all duration-200 h-full"
                 onClick={() => handleTemplateClick(template)}
               >
                 <CardHeader>
-                  <CardTitle className="text-xl">
-                    <img 
-                      src={`/blueprints/${template.id}/${template.logo}`} 
+                  <CardTitle className="text-xl ">
+                    <img
+                      src={`/blueprints/${template.id}/${template.logo}`}
                       alt={template.name}
-                      className="w-12 h-12 object-contain"
+                      className="w-12 h-12 object-contain mb-2"
                     />
-                    {template.name}</CardTitle>
+                    {template.name}
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{template.description}</p>
+                <CardContent className="flex-1">
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {template.description}
+                  </p>
                   <div className="mt-2 flex flex-wrap gap-1">
                     {template.tags.slice(0, 3).map((tag) => (
                       <span
@@ -183,7 +201,9 @@ const TemplateGrid: React.FC = () => {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">v{template.version}</span>
+                  <span className="text-sm text-gray-500">
+                    v{template.version}
+                  </span>
                   <svg
                     className="w-4 h-4 text-gray-400"
                     fill="none"
@@ -210,21 +230,28 @@ const TemplateGrid: React.FC = () => {
         </div>
       </div>
 
-      <Dialog open={!!selectedTemplate} onOpenChange={() => setSelectedTemplate(null)}>
+      <Dialog
+        open={!!selectedTemplate}
+        onOpenChange={() => setSelectedTemplate(null)}
+      >
         <DialogContent className="max-w-[90vw] w-full lg:max-w-7xl max-h-[85vh] overflow-y-auto p-6">
           <DialogHeader className="space-y-4">
             <div className="flex items-center gap-4">
               {selectedTemplate?.logo && (
-                <img 
-                  src={`/blueprints/${selectedTemplate.id}/${selectedTemplate.logo}`} 
+                <img
+                  src={`/blueprints/${selectedTemplate.id}/${selectedTemplate.logo}`}
                   alt={selectedTemplate.name}
                   className="w-12 h-12 object-contain"
                 />
               )}
               <div>
-                <DialogTitle className="text-2xl">{selectedTemplate?.name}</DialogTitle>
+                <DialogTitle className="text-2xl">
+                  {selectedTemplate?.name}
+                </DialogTitle>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-sm text-gray-500">{selectedTemplate?.version}</span>
+                  <span className="text-sm text-gray-500">
+                    {selectedTemplate?.version}
+                  </span>
                   <div className="flex gap-2">
                     {selectedTemplate?.links.github && (
                       <a
@@ -248,13 +275,13 @@ const TemplateGrid: React.FC = () => {
                     )}
 
                     <a
-                        href={`https://github.com/Dokploy/templates/tree/main/blueprints/${selectedTemplate?.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-gray-900"
-                      >
-                        Edit Template
-                      </a>
+                      href={`https://github.com/Dokploy/templates/tree/main/blueprints/${selectedTemplate?.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:text-gray-900"
+                    >
+                      Edit Template
+                    </a>
                   </div>
                 </div>
               </div>
@@ -273,7 +300,7 @@ const TemplateGrid: React.FC = () => {
               ))}
             </div>
           </DialogHeader>
-          
+
           {modalLoading ? (
             <div className="py-12 text-center">
               <div className="inline-block animate-spin rounded-full h-10 w-10 border-4 border-solid border-blue-500 border-r-transparent"></div>
@@ -282,66 +309,72 @@ const TemplateGrid: React.FC = () => {
           ) : (
             <div className="grid gap-8 mt-6">
               {templateFiles?.dockerCompose && (
-                <div className='max-w-6xl w-full relative'>
+                <div className="max-w-6xl w-full relative">
                   <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     Docker Compose
-                    <span className="text-xs font-normal text-gray-500">docker-compose.yml</span>
+                    <span className="text-xs font-normal text-gray-500">
+                      docker-compose.yml
+                    </span>
                   </h3>
                   <CodeEditor
-                    value={templateFiles.dockerCompose || ''}
+                    value={templateFiles.dockerCompose || ""}
                     language="yaml"
-                    className='font-mono'
+                    className="font-mono"
                   />
                   <Button
-                      onClick={() => {
-                        toast.success('Copied to clipboard')
-                        copy(templateFiles.dockerCompose || '')
-                      }}
-                      className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
-                    >
-                      Copy
-                    </Button>
+                    onClick={() => {
+                      toast.success("Copied to clipboard");
+                      copy(templateFiles.dockerCompose || "");
+                    }}
+                    className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
+                  >
+                    Copy
+                  </Button>
                 </div>
               )}
               {templateFiles?.config && (
-                <div  className='max-w-6xl w-full relative'>
+                <div className="max-w-6xl w-full relative">
                   <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     Configuration
-                    <span className="text-xs font-normal text-gray-500">template.yml</span>
+                    <span className="text-xs font-normal text-gray-500">
+                      template.yml
+                    </span>
                   </h3>
                   <CodeEditor
-                    value={templateFiles.config || ''}
+                    value={templateFiles.config || ""}
                     language="yaml"
-                    className='font-mono'
+                    className="font-mono"
                   />
 
                   <Button
-                      onClick={() => {
-                        toast.success('Copied to clipboard')
-                        copy(templateFiles.config || '')
-                      }}
-                      className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
-                    >
-                      Copy
-                    </Button>
+                    onClick={() => {
+                      toast.success("Copied to clipboard");
+                      copy(templateFiles.config || "");
+                    }}
+                    className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
+                  >
+                    Copy
+                  </Button>
                 </div>
               )}
               {(templateFiles?.dockerCompose || templateFiles?.config) && (
-                <div  className='max-w-6xl w-full'>
+                <div className="max-w-6xl w-full">
                   <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     Base64 Configuration
-                    <span className="text-xs font-normal text-gray-500">Encoded template files</span>
+                    <span className="text-xs font-normal text-gray-500">
+                      Encoded template files
+                    </span>
                   </h3>
                   <div className="relative">
                     <CodeEditor
                       value={getBase64Config()}
                       language="properties"
-                      className='font-mono'
+                      className="font-mono"
                     />
                     <Button
                       onClick={() => {
-                        toast.success('Copied to clipboard')
-                        copy(getBase64Config())
+                        toast.success("Copied to clipboard");
+                        copy(getBase64Config());
                       }}
                       className="absolute top-2 right-2 px-3 py-1  text-sm cursor-pointer"
                     >
@@ -352,7 +385,9 @@ const TemplateGrid: React.FC = () => {
               )}
               {!templateFiles?.dockerCompose && !templateFiles?.config && (
                 <div className="text-center py-8">
-                  <p className="text-gray-500">No configuration files available for this template.</p>
+                  <p className="text-gray-500">
+                    No configuration files available for this template.
+                  </p>
                 </div>
               )}
             </div>
@@ -363,4 +398,4 @@ const TemplateGrid: React.FC = () => {
   );
 };
 
-export default TemplateGrid; 
+export default TemplateGrid;

@@ -61,7 +61,7 @@ const TemplateDialog: React.FC<TemplateDialogProps> = ({
   return (
     <Dialog open={!!selectedTemplate} onOpenChange={onOpenChange}>
       <DialogContent className="flex flex-col !max-w-[90vw] w-full lg:max-w-[90vw] max-h-[85vh] p-0">
-        <DialogHeader className="space-y-4 border-b sticky top-0 p-4 pb-4 text-start bg-background rounded-t-lg z-10">
+        <DialogHeader className="space-y-4 border-b sticky top-0 p-4 pb-0 text-start bg-background rounded-t-lg z-10">
           <div className="flex items-center gap-4">
             {selectedTemplate?.logo && (
               <img

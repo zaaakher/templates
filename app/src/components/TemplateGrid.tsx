@@ -22,6 +22,8 @@ import { useStore } from "../store";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Label } from "./ui/label";
 import { Clipboard } from "lucide-react";
+import { Skeleton } from "./ui/skeleton";
+import { cn } from "@/lib/utils";
 
 interface Template {
   id: string;
@@ -42,11 +44,17 @@ interface TemplateFiles {
   config: string | null;
 }
 
-const TemplateGrid: React.FC = () => {
+interface TemplateGridProps {
+  view: "grid" | "rows";
+}
+
+const TemplateGrid: React.FC<TemplateGridProps> = ({ view }) => {
   const { templates, setTemplates } = useStore();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { addSelectedTag, searchQuery, selectedTags } = useStore();
+  const searchQuery = useStore((state) => state.searchQuery);
+  const selectedTags = useStore((state) => state.selectedTags);
+  const { addSelectedTag } = useStore();
 
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null
@@ -133,9 +141,23 @@ const TemplateGrid: React.FC = () => {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">
-          Loading templates...
-        </h1>
+        <div
+          className={cn("", {
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6":
+              view === "grid",
+            "grid grid-cols-1 gap-4": view === "rows",
+          })}
+        >
+          {[1, 2, 3].map((item) => (
+            <Skeleton
+              key={item}
+              className={cn({
+                "h-[300px]": view === "grid",
+                "h-[135px]": view === "rows",
+              })}
+            ></Skeleton>
+          ))}
+        </div>
       </div>
     );
   }
@@ -154,14 +176,27 @@ const TemplateGrid: React.FC = () => {
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div
+          className={cn("", {
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6":
+              view === "grid",
+            "grid grid-cols-1 gap-4": view === "rows",
+          })}
+        >
           {filteredTemplates.length > 0 ? (
             filteredTemplates.map((template) => (
               <Card
                 key={template.id}
-                className=" cursor-pointer hover:shadow-lg transition-all duration-200 h-full max-h-[300px]"
+                onClick={() => handleTemplateClick(template)}
+                className={cn(
+                  " cursor-pointer hover:shadow-lg transition-all duration-200 h-full max-h-[300px]",
+                  {
+                    "flex-col": view === "grid",
+                    "flex-row": view === "rows",
+                  }
+                )}
               >
-                <CardHeader onClick={() => handleTemplateClick(template)}>
+                <CardHeader>
                   <CardTitle className="text-xl ">
                     <img
                       src={`/blueprints/${template.id}/${template.logo}`}
@@ -175,10 +210,13 @@ const TemplateGrid: React.FC = () => {
                   <p className="text-sm text-muted-foreground line-clamp-2">
                     {template.description}
                   </p>
-                  <div className="mt-2 flex flex-wrap gap-1">
+                  <div className="mt-2 flex flex-wrap gap-1 w-fit">
                     {template.tags.slice(0, 3).map((tag) => (
                       <span
-                        onClick={() => addSelectedTag(tag)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addSelectedTag(tag);
+                        }}
                         key={tag}
                         className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800"
                       >
@@ -187,10 +225,7 @@ const TemplateGrid: React.FC = () => {
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter
-                  className="flex justify-between items-center"
-                  onClick={() => handleTemplateClick(template)}
-                >
+                <CardFooter className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">
                     {template.version}
                   </span>
@@ -224,7 +259,7 @@ const TemplateGrid: React.FC = () => {
         open={!!selectedTemplate}
         onOpenChange={() => setSelectedTemplate(null)}
       >
-        <DialogContent className="max-w-[90vw] w-full lg:max-w-[90vw] max-h-[85vh] overflow-y-auto p-0">
+        <DialogContent className="!max-w-[90vw] w-full lg:max-w-[90vw] max-h-[85vh] overflow-y-auto p-0">
           <DialogHeader className="space-y-4 border-b sticky top-0 p-4 bg-background z-10">
             <div className="flex items-center gap-4">
               {selectedTemplate?.logo && (
@@ -278,7 +313,7 @@ const TemplateGrid: React.FC = () => {
             </div>
           </DialogHeader>
 
-          <div className="p-6 pt-3  flex flex-col gap-2">
+          <div className="p-6 pt-3 max-w-[100%] flex flex-col gap-2">
             <DialogDescription className="text-base">
               {selectedTemplate?.description}
             </DialogDescription>
@@ -339,7 +374,7 @@ const TemplateGrid: React.FC = () => {
                   </TabsList>
                   <TabsContent value="docker-compose">
                     {templateFiles?.dockerCompose && (
-                      <div className="max-w-6xl w-full relative">
+                      <div className=" flex flex-col relative">
                         <Label className=" flex mb-2 flex-col items-start w-fit justify-start gap-1">
                           <span className="leading-tight text-xl font-semibold">
                             Docker Compose

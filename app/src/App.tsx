@@ -1,9 +1,13 @@
-import TemplateGrid from './components/TemplateGrid';
-import './App.css';
+import TemplateGrid from "./components/TemplateGrid";
+import Navigation from "./components/Navigation";
+import "./App.css";
 
 function App() {
   return (
+    <div>
+      <Navigation />
       <TemplateGrid />
+    </div>
   );
 }
 

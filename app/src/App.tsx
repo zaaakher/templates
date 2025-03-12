@@ -1,7 +1,7 @@
 import TemplateGrid from "./components/TemplateGrid";
 import Navigation from "./components/Navigation";
 import Search from "./components/Search";
-import { useStore } from "./store";
+import { useStore } from "@/store";
 import "./App.css";
 
 function App() {

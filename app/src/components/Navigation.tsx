@@ -1,5 +1,5 @@
 import { ModeToggle } from "@/mode-toggle";
-import { StarIcon } from "lucide-react";
+import { Plus, StarIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import DokployLogo from "./ui/dokploy-logo";
@@ -29,6 +29,18 @@ const Navigation = () => {
         <h1 className="text-2xl font-bold">Dokploy Templates</h1>
       </div>
       <div className="flex flex-row gap-2 justify-center items-center">
+        <Button
+          onClick={() => {
+            window.open(
+              "https://github.com/Dokploy/dokploy/discussions/new?category=ideas",
+              "_blank"
+            );
+          }}
+        >
+          Add Template
+          <Plus />
+        </Button>
+
         <Button
           onClick={() => {
             window.open("https://github.com/dokploy/dokploy", "_blank");

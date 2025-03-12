@@ -1,4 +1,4 @@
-import { useStore } from "../store";
+import { useStore } from "@/store";
 import { Badge } from "@/components/ui/badge";
 
 const Tags = () => {

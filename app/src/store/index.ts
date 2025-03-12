@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
 interface Template {
   id: string;
@@ -26,4 +26,4 @@ export const useStore = create<Store>((set) => ({
   setTemplates: (templates) => set({ templates }),
   githubStars: 0,
   setGithubStars: (count) => set({ githubStars: count }),
-})) 
+}));

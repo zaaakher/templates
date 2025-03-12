@@ -17,9 +17,11 @@ import {
 import { Button } from "./ui/button";
 import { toast } from "sonner";
 import copy from "copy-to-clipboard";
-import { ModeToggle } from "../mode-toggle";
 import { CodeEditor } from "./ui/code-editor";
 import { useStore } from "../store";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Label } from "./ui/label";
+import { Clipboard } from "lucide-react";
 
 interface Template {
   id: string;
@@ -234,8 +236,8 @@ const TemplateGrid: React.FC = () => {
         open={!!selectedTemplate}
         onOpenChange={() => setSelectedTemplate(null)}
       >
-        <DialogContent className="max-w-[90vw] w-full lg:max-w-7xl max-h-[85vh] overflow-y-auto p-6">
-          <DialogHeader className="space-y-4">
+        <DialogContent className="max-w-[90vw] w-full lg:max-w-[90vw] max-h-[85vh] overflow-y-auto p-0">
+          <DialogHeader className="space-y-4 border-b sticky top-0 p-4 bg-background z-10">
             <div className="flex items-center gap-4">
               {selectedTemplate?.logo && (
                 <img
@@ -286,6 +288,9 @@ const TemplateGrid: React.FC = () => {
                 </div>
               </div>
             </div>
+          </DialogHeader>
+
+          <div className="p-6 pt-3  flex flex-col gap-2">
             <DialogDescription className="text-base">
               {selectedTemplate?.description}
             </DialogDescription>
@@ -299,99 +304,123 @@ const TemplateGrid: React.FC = () => {
                 </span>
               ))}
             </div>
-          </DialogHeader>
 
-          {modalLoading ? (
-            <div className="py-12 text-center">
-              <div className="inline-block animate-spin rounded-full h-10 w-10 border-4 border-solid border-blue-500 border-r-transparent"></div>
-              <p className="mt-4 text-gray-600">Loading template files...</p>
-            </div>
-          ) : (
-            <div className="grid gap-8 mt-6">
-              {templateFiles?.dockerCompose && (
-                <div className="max-w-6xl w-full relative">
-                  <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
-                    Docker Compose
-                    <span className="text-xs font-normal text-gray-500">
-                      docker-compose.yml
-                    </span>
-                  </h3>
-                  <CodeEditor
-                    value={templateFiles.dockerCompose || ""}
-                    language="yaml"
-                    className="font-mono"
-                  />
-                  <Button
-                    onClick={() => {
-                      toast.success("Copied to clipboard");
-                      copy(templateFiles.dockerCompose || "");
-                    }}
-                    className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
-                  >
-                    Copy
-                  </Button>
-                </div>
-              )}
-              {templateFiles?.config && (
-                <div className="max-w-6xl w-full relative">
-                  <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
-                    Configuration
-                    <span className="text-xs font-normal text-gray-500">
-                      template.yml
-                    </span>
-                  </h3>
-                  <CodeEditor
-                    value={templateFiles.config || ""}
-                    language="yaml"
-                    className="font-mono"
-                  />
-
-                  <Button
-                    onClick={() => {
-                      toast.success("Copied to clipboard");
-                      copy(templateFiles.config || "");
-                    }}
-                    className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
-                  >
-                    Copy
-                  </Button>
-                </div>
-              )}
-              {(templateFiles?.dockerCompose || templateFiles?.config) && (
-                <div className="max-w-6xl w-full">
-                  <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
-                    Base64 Configuration
-                    <span className="text-xs font-normal text-gray-500">
-                      Encoded template files
-                    </span>
-                  </h3>
-                  <div className="relative">
-                    <CodeEditor
-                      value={getBase64Config()}
-                      language="properties"
-                      className="font-mono"
-                    />
-                    <Button
-                      onClick={() => {
-                        toast.success("Copied to clipboard");
-                        copy(getBase64Config());
-                      }}
-                      className="absolute top-2 right-2 px-3 py-1  text-sm cursor-pointer"
-                    >
-                      Copy
-                    </Button>
+            {modalLoading ? (
+              <div className="py-12 text-center">
+                <div className="inline-block animate-spin rounded-full h-10 w-10 border-4 border-solid border-blue-500 border-r-transparent"></div>
+                <p className="mt-4 text-gray-600">Loading template files...</p>
+              </div>
+            ) : (
+              <div className="grid gap-4 mt-6">
+                {(templateFiles?.dockerCompose || templateFiles?.config) && (
+                  <div className="flex flex-col gap-3">
+                    <Label className=" flex  flex-col items-start w-fit justify-start gap-1">
+                      <span className="leading-tight text-xl font-semibold">
+                        Base64 Configuration
+                      </span>
+                      <span className="leading-tight text-sm  text-gray-500">
+                        Encoded template file
+                      </span>
+                    </Label>
+                    <div className="relative">
+                      <Button
+                        // variant={"outline"}
+                        className="absolute end-0
+                     "
+                        size={"icon"}
+                        onClick={() => {
+                          toast.success("Copied to clipboard");
+                          copy(getBase64Config());
+                        }}
+                      >
+                        <Clipboard />
+                      </Button>
+                      <Input
+                        value={getBase64Config()}
+                        className="max-w-6xl w-full pe-10"
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
-              {!templateFiles?.dockerCompose && !templateFiles?.config && (
-                <div className="text-center py-8">
-                  <p className="text-gray-500">
-                    No configuration files available for this template.
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
+                )}
+                <Tabs defaultValue="docker-compose">
+                  <TabsList>
+                    <TabsTrigger value="docker-compose">
+                      Docker Compose
+                    </TabsTrigger>
+                    <TabsTrigger value="config">Configuration</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="docker-compose">
+                    {templateFiles?.dockerCompose && (
+                      <div className="max-w-6xl w-full relative">
+                        <Label className=" flex mb-2 flex-col items-start w-fit justify-start gap-1">
+                          <span className="leading-tight text-xl font-semibold">
+                            Docker Compose
+                          </span>
+                          <span className="leading-tight text-sm  text-gray-500">
+                            docker-compose.yml
+                          </span>
+                        </Label>
+
+                        <CodeEditor
+                          value={templateFiles.dockerCompose || ""}
+                          language="yaml"
+                          className="font-mono"
+                        />
+                        <Button
+                          onClick={() => {
+                            toast.success("Copied to clipboard");
+                            copy(templateFiles.dockerCompose || "");
+                          }}
+                          className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
+                        >
+                          Copy
+                        </Button>
+                      </div>
+                    )}
+                  </TabsContent>
+
+                  <TabsContent value="config">
+                    {templateFiles?.config && (
+                      <div className="max-w-6xl w-full relative">
+                        <Label className=" flex mb-2 flex-col items-start w-fit justify-start gap-1">
+                          <span className="leading-tight text-xl font-semibold">
+                            Configuration
+                          </span>
+                          <span className="leading-tight text-sm  text-gray-500">
+                            template.yml
+                          </span>
+                        </Label>
+
+                        <CodeEditor
+                          value={templateFiles.config || ""}
+                          language="yaml"
+                          className="font-mono"
+                        />
+
+                        <Button
+                          onClick={() => {
+                            toast.success("Copied to clipboard");
+                            copy(templateFiles.config || "");
+                          }}
+                          className="absolute top-10 right-2 px-3 py-1  text-sm cursor-pointer"
+                        >
+                          Copy
+                        </Button>
+                      </div>
+                    )}
+                  </TabsContent>
+                </Tabs>
+
+                {!templateFiles?.dockerCompose && !templateFiles?.config && (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">
+                      No configuration files available for this template.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
     </>
